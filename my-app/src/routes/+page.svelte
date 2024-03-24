@@ -20,10 +20,12 @@ const login = ()=>{
     .then((data)=>{
         if((data?.messages?.length === 0) && !data?.errors){
             alert("U r logged in")}
+            // we are handling an error with a message attribute, 
+            // which only error object has (case when no entry is given)
             else if(data?.message){
             alert(data.errors[0].messages[0])
         } else {
-        alert(data.messages[0].content)
+        alert(data.messages[0].title + ". " + data.messages[0].content)
         }
         }
         // if(data) user.update(val => val = {...data})
