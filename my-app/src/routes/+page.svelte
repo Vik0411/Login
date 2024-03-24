@@ -16,13 +16,9 @@ const login = ()=>{
   },
         body: JSON.stringify({userCode:userCode,password:password})
     })
-    .then((res)=>{
-        if(res.status < 299) return res.json()
-        if(res.status > 299)
-        return res.json()
-    })
+    .then(res=>res.json())
     .then((data)=>{
-        if((data?.messages.length === 0) && !data?.errors){
+        if((data?.messages?.length === 0) && !data?.errors){
             alert("U r logged in")}
             else if(data?.message){
             alert(data.errors[0].messages[0])
