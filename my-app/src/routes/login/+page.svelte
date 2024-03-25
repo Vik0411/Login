@@ -25,15 +25,16 @@ const login = ()=>{
             goto('/',{noScroll: false,replaceState: true});
             user.update(val => val = data.user)
         }
-            
             // we are handling an error with a message attribute, 
             // which only error object has (case when no entry is given)
             else if(data?.message){
             alert(data.errors[0].messages[0])
         } else {
-        alert(data.messages[0].title + ". " + data.messages[0].content)
-        goto('/',{noScroll: false,replaceState: true});
+        alert(data.messages[0].content)
+        if(data.user){
+            goto('/',{noScroll: false,replaceState: true});
             user.update(val => val = data.user);
+        }
         }
 
 
