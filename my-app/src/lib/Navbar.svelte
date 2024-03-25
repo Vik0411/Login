@@ -24,7 +24,8 @@
     {#if isLoggedIn === false}
     <a class="nav_link" href="/login">Login</a>
     {:else}
-    <button on:click={logout}>Logout</button>
+    <button class="nav_btn" on:click={logout} style="display; transparent; padding: 0;
+    background: none;">Logout</button>
     {/if}
 
 </nav>
@@ -42,9 +43,21 @@
        font-size: 1.25em;
        color: #FC521A;
        margin: 0 1em;
-   
+    }
+
+    .nav_btn{
+       text-decoration: none;
+       font-size: 1.25em;
+       color: #FC521A;
+       margin: 0 1em;
+       border: none;
     }
     .nav_link:hover{
        border-bottom: 2px solid #FC521A;
+    }
+
+    .nav_btn:hover{
+       border-bottom: 2px solid #FC521A;
+       cursor: pointer;
     }
    </style>
