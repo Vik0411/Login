@@ -4,14 +4,7 @@
 	$: isLoggedIn = $user === null ? false : true;
 
 	const logout = () => {
-		// await fetch('http://localhost:3030/api/logout',{
-		//     method: "POST",
-		//     credentials: 'include',
-		//     headers: {
-		//         'Accept': 'application/json',
-		//         'content-type':  'application/json',
-		//     }
-		// })
+		// Here logout endpoint would need to be added when available
 		user.update((val) => (val = null));
 		isLoggedIn = false;
 		goto('/login', { noScroll: false, replaceState: true });

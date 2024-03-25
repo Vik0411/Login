@@ -5,7 +5,7 @@
 	let userCode = '';
 	let password = '';
 
-	// origin: 'http://10.2.2.10/AlbiScanner.stage/api/v1/login',
+	// original url: 'http://10.2.2.10/AlbiScanner.stage/api/v1/login',
 	const login = () => {
 		fetch('http://localhost:8010/proxy', {
 			method: 'POST',
@@ -17,12 +17,12 @@
 			.then((res) => res.json())
 			.then((data) => {
 				if (data?.messages?.length === 0 && !data?.errors) {
-					alert('U r logged in');
+					alert('Yoy are successfully logged in!');
 					console.log(data.user);
 					goto('/', { noScroll: false, replaceState: true });
 					user.update((val) => (val = data.user));
 				}
-				// we are handling an error with a message attribute,
+				// here is handling of an error with a message attribute,
 				// which only error object has (case when no entry is given)
 				else if (data?.message) {
 					alert(data.errors[0].messages[0]);
@@ -39,58 +39,45 @@
 			});
 	};
 
-	console.log('name', user.name);
-
-	// util to delete or use:
-
-	// let dataMsg= data?.messages[0];
-	// let dataErrs = data?.errors[0];
-
-	//     if(dataMsg){
-	//         alert(dataMsg.content)
-	//     console.log(data.messages[0].content) // status 200
-	// }else if(dataErrs) {
-	//     errMsg = dataErrs.messages[0]
-	//     console.log(data.errors[0].messages[0])  // status 401 or 422
-	// } else {
-	//     console.log("all ok") // status 200
-	// }
+	if (user) console.log('userName', user.name);
 </script>
 
-<div style="display: flex; justify-content: space-around; flex-flow: column; margin-top: 80px;">
-	<h3 style="text-align: center;">
+<div
+	style="display: flex; justify-content: space-around;
+	 flex-flow: column; margin-top: 65px"
+>
+	<h3 style="text-align: center; font-weight: normal; opacity: 0.9;">
 		„Hra je jeden z nejefektivnějších způsobů, jak zjednodušit život.
 		<br />Přesně to jsme dělali jako děti, ale v dospělosti jsme si hrát zapomněli.“ A.E.
 	</h3>
 	<form on:submit|preventDefault={login} style="text-align: center; background-color:black">
 		<div>
-			<label for="userCode">Usercode</label>
+			<label style="font-weight: lighter;" for="userCode">User code</label>
 			<input
 				autocomplete="off"
 				type="text"
 				id="usercode"
 				bind:value={userCode}
-				style="text-align: center; background-color:black;color:antiquewhite; border-radius: 10px"
+				style="text-align: center; background-color:black;
+				color:antiquewhite; border-radius: 10px"
 			/>
 		</div>
 		<div>
-			<label for="password">Password</label>
+			<label style="font-weight: lighter;" for="password">Password</label>
 			<input
 				autocomplete="off"
 				type="password"
 				id="password"
 				bind:value={password}
-				style="text-align: center; background-color:black; color:antiquewhite; border-radius: 10px;"
+				style="text-align: center; background-color:black;
+				color:antiquewhite; border-radius: 10px;"
 			/>
 		</div>
 		<button
 			type="submit"
-			style="cursor:pointer;  border-radius: 10px; width: 30%; text-align:center; margin: 40px 60%"
-			>Enter</button
+			style="cursor:pointer;  border-radius: 10px; 
+			width: 20%; text-align:center; margin: 10px 50%;
+			font-family: inherit; font-weight: lighter;">Enter</button
 		>
 	</form>
 </div>
-
-<!-- <h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
-<p>hi</p> -->
