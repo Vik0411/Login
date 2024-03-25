@@ -1,7 +1,7 @@
 <script>
     import {goto} from '$app/navigation';
     import user from '../user';
-    $: isLoggedIn = $user == {}? false : true;
+    $: isLoggedIn = $user === null? false : true;
 
     const logout = () =>{
         // await fetch('http://localhost:3030/api/logout',{

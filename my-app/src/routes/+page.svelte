@@ -29,7 +29,7 @@ console.log("user", user)
 <div class="content_wrapper">
     <h1>Welcome back to Childhood.</h1>
     {#if isLoggedIn}
-    <h2>Thank you for logging in {$user}</h2>
+    <h2>Thank you for logging in {$user.name}</h2>
     {:else}
     <h2>You need to be logged in here.</h2>
     <h2>Head to Sign in page above</h2>
