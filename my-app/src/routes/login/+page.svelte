@@ -43,7 +43,7 @@
 					if (!isStatusOk) {
 						// just in case there is another unexpected request
 						// with res.ok false, which isn't caught by catch below
-						throw new Error('Sorry, There was an error logging in.');
+						throw new Error('Sorry, the fetch response was not ok.');
 					}
 				}
 			})
