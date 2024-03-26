@@ -1,38 +1,9 @@
-# create-svelte
+## About
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+Simple application for login in **SvelteKit** with error handling.
 
-## Creating a project
+### Comments on Impementation and Testing
 
-If you're seeing this, you've probably already done this step. Congrats!
+There are certainly different ways to approach the error handling here. Mine chosen solution is perhaps a bit more verbose, but should safely handle all error states, while at the same time getting specified data even from requests returning 4xx status, which made me give it priority in the end.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+Apart from the four mentioned **response "types"**, I found also state, when user doesn't enter any credentials in User Code, which returns mentioned "messages" data only in an errors object with: ["User Code cannot be blank."]. Login was tested via given VPN and also a **proxy** (proxy was created because of a CORS issue), which remains in the code. **Please just replace url in fetch with your given original url, which is commented out between my localhost with a proxy**. SvelteKit app was created with also typescript rules, but in the end verbose ts definitions were not used for the purposes of this app. Code was formatted with **Prettier** support for Svelte.
