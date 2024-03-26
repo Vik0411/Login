@@ -35,7 +35,7 @@
 					errorMessage = data?.errors[0]?.messages[0];
 				} else if (data?.user) {
 					alert(data.messages[0].content);
-					goto('/', { noScroll: false, replaceState: true });
+					goto('/');
 					user.update((val) => (val = data.user));
 				} else if (!data?.user) {
 					errorMessage = data?.messages[0].content;
