@@ -1,11 +1,17 @@
 <script>
 	import { goto } from '$app/navigation';
+
+	import { error } from '@sveltejs/kit';
 	import user from '../../user';
 
 	let userCode = '';
 	let password = '';
 
-	// original url: 'http://10.2.2.10/AlbiScanner.stage/api/v1/login',
+	let errorMessage = null;
+	let status = null;
+
+	// original url to be used when accessing without proxy:
+	// 'http://10.2.2.10/AlbiScanner.stage/api/v1/login',
 	const login = () => {
 		fetch('http://localhost:8010/proxy', {
 			method: 'POST',
@@ -17,29 +23,31 @@
 			.then((res) => res.json())
 			.then((data) => {
 				if (data?.messages?.length === 0 && !data?.errors) {
-					alert('Yoy are successfully logged in!');
-					console.log(data.user);
+					alert('You are successfully logged in!');
 					goto('/', { noScroll: false, replaceState: true });
 					user.update((val) => (val = data.user));
 				}
 				// here is handling of an error with a message attribute,
 				// which only error object has (case when no entry is given)
 				else if (data?.message) {
-					alert(data.errors[0].messages[0]);
+					errorMessage = data?.errors[0]?.messages[0];
 				} else {
-					alert(data.messages[0].content);
-					if (data.user) {
+					if (data?.user) {
+						alert(data.messages[0].content);
 						goto('/', { noScroll: false, replaceState: true });
+
 						user.update((val) => (val = data.user));
+					} else {
+						errorMessage = data?.messages[0].content;
 					}
 				}
 			})
-			.catch((error) => {
-				console.log('Error logging in:', error.message);
+			.catch((err) => {
+				// just to make sure also other error types are caught here
+				console.log('Error logging in:', err);
+				alert(err.message);
 			});
 	};
-
-	if (user) console.log('userName', user.name);
 </script>
 
 <div
@@ -56,7 +64,7 @@
 			<input
 				autocomplete="off"
 				type="text"
-				id="usercode"
+				id="userCode"
 				bind:value={userCode}
 				style="text-align: center; background-color:black;
 				color:antiquewhite; border-radius: 10px"
@@ -73,6 +81,11 @@
 				color:antiquewhite; border-radius: 10px;"
 			/>
 		</div>
+		{#if errorMessage}
+			<p style="color: #fc521a; font-size:small; margin-bottom: 0px">
+				{errorMessage}
+			</p>
+		{/if}
 		<button
 			type="submit"
 			style="cursor:pointer;  border-radius: 10px; 
