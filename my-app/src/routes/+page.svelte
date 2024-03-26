@@ -1,4 +1,6 @@
 <script>
+	// @ts-nocheck
+
 	import user from '../user';
 
 	let wholeUser = null;
@@ -6,8 +8,6 @@
 	$: isLoggedIn = $user === null ? false : true;
 	// Here onMount would normally eventually be used
 	// for getting the logged-in user
-
-	console.log('userObject', user);
 </script>
 
 <div class="content_wrapper">
