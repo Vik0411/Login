@@ -1,14 +1,13 @@
 <script>
 	import { goto } from '$app/navigation';
 
-	import { error } from '@sveltejs/kit';
 	import user from '../../user';
 
 	let userCode = '';
 	let password = '';
 
-	let errorMessage = null;
-	let status = null;
+	let errorMessage = '';
+	let isStatusOk = true;
 
 	// original url to be used when accessing without proxy:
 	// 'http://10.2.2.10/AlbiScanner.stage/api/v1/login',
@@ -20,7 +19,10 @@
 			},
 			body: JSON.stringify({ userCode: userCode, password: password })
 		})
-			.then((res) => res.json())
+			.then((res) => {
+				isStatusOk = res.ok;
+				return res.json();
+			})
 			.then((data) => {
 				if (data?.messages?.length === 0 && !data?.errors) {
 					alert('You are successfully logged in!');
@@ -31,21 +33,24 @@
 				// which only error object has (case when no entry is given)
 				else if (data?.message) {
 					errorMessage = data?.errors[0]?.messages[0];
+				} else if (data?.user) {
+					alert(data.messages[0].content);
+					goto('/', { noScroll: false, replaceState: true });
+					user.update((val) => (val = data.user));
+				} else if (!data?.user) {
+					errorMessage = data?.messages[0].content;
 				} else {
-					if (data?.user) {
-						alert(data.messages[0].content);
-						goto('/', { noScroll: false, replaceState: true });
-
-						user.update((val) => (val = data.user));
-					} else {
-						errorMessage = data?.messages[0].content;
+					if (!isStatusOk) {
+						// just in case there is another unexpected request
+						// with res.ok false, which isn't caught by catch below
+						throw new Error('Sorry, There was an error logging in.');
 					}
 				}
 			})
 			.catch((err) => {
-				// just to make sure also other error types are caught here
+				// just to make sure also other missed errors are caught here
 				console.log('Error logging in:', err);
-				alert(err.message);
+				alert('Error logging in: ' + err.message);
 			});
 	};
 </script>
