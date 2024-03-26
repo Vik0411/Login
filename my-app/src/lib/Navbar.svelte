@@ -7,7 +7,7 @@
 		// Here logout endpoint would need to be added when available
 		user.update((val) => (val = null));
 		isLoggedIn = false;
-		goto('/login', { noScroll: false, replaceState: true });
+		goto('/login');
 	};
 </script>
 

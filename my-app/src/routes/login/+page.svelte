@@ -26,7 +26,7 @@
 			.then((data) => {
 				if (data?.messages?.length === 0 && !data?.errors) {
 					alert('You are successfully logged in!');
-					goto('/', { noScroll: false, replaceState: true });
+					goto('/');
 					user.update((val) => (val = data.user));
 				}
 				// here is handling of an error with a message attribute,
